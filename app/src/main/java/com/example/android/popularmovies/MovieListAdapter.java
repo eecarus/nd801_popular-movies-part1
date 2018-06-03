@@ -55,7 +55,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         Picasso.with(context)
                 .load(uri.toString())
                 .fit()
-//               .centerCrop()
+//              .centerCrop()
                 .placeholder(R.drawable.ic_movie)
                 .error(R.drawable.ic_movie)
                 .into(holder.mMoviePosterImageView);
