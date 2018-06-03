@@ -56,9 +56,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         Picasso.with(context)
                 .load(uri.toString())
                 .fit()
-//                .centerCrop()
-//                .placeholder(R.drawable.ic_launcher_background)
-//                .error(R.drawable.ic_launcher_background)
+//               .centerCrop()
+                .placeholder(R.drawable.ic_movie)
+                .error(R.drawable.ic_movie)
                 .into(holder.mMoviePosterImageView);
         Log.w(TAG, "after loading, size is " + holder.mMoviePosterImageView.getLayoutParams() + ", " + holder.mMoviePosterImageView.getMaxWidth());
 
