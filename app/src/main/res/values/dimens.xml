@@ -5,4 +5,5 @@
     <dimen name="activity_horizontal_padding">16dp</dimen>
     <dimen name="activity_top_padding">16dp</dimen>
     <dimen name="summary_movie_poster_height">192dp</dimen>
+    <dimen name="summary_padding">4dp</dimen>
 </resources>

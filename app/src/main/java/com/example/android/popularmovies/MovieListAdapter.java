@@ -60,6 +60,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 //                .placeholder(R.drawable.ic_launcher_background)
 //                .error(R.drawable.ic_launcher_background)
                 .into(holder.mMoviePosterImageView);
+        Log.w(TAG, "after loading, size is " + holder.mMoviePosterImageView.getLayoutParams() + ", " + holder.mMoviePosterImageView.getMaxWidth());
 
     }
 
