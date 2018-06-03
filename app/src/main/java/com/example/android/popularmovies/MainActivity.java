@@ -6,11 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.android.popularmovies.moviedb.ApiUtils;
 import com.example.android.popularmovies.moviedb.MovieDbService;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,15 +33,50 @@ public class MainActivity extends AppCompatActivity {
 
         // create the Adapter
         mMovieListAdapter = new MovieListAdapter(MainActivity.this, movieService);
-        mMovieListAdapter.setMovieSummaries(ApiUtils.getFakeData(MainActivity.this).getResults());
 
         // attach the Recycler view and set its attributes
         mMoviePostersRecyclerView = findViewById(R.id.rv_movie_posters_list);
         mMoviePostersRecyclerView.setLayoutManager(layoutManager);
         mMoviePostersRecyclerView.setHasFixedSize(true);
         mMoviePostersRecyclerView.setAdapter(mMovieListAdapter);
-        Log.w(TAG, "count is " + mMovieListAdapter.getItemCount());
+
+        loadMovieData();
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // The section on Menus comes from Lesson 2:2
+    //
+    // The following methods initialize the menu and respond to the initial 'Refresh' action,
+    // although nothing is actually done yet.
+    // ---------------------------------------------------------------------------------------------
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int selectedId = item.getItemId();
+        if (selectedId == R.id.action_refresh) {
+            loadMovieData();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The following methods deal with changing the data on the adapter.
+    // ---------------------------------------------------------------------------------------------
+
+    private void loadMovieData() {
+        mMovieListAdapter.setMovieSummaries(ApiUtils.getFakeData(MainActivity.this).getResults());
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Various utility methods
+    // ---------------------------------------------------------------------------------------------
 
     private int calculateSpan() {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)

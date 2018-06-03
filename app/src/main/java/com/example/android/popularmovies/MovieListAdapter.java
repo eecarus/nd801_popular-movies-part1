@@ -52,7 +52,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         Uri uri = movieService.getFullImagePath(summary.getPosterPath());
 
         // use Picasso to load it
-        Log.w(TAG, "loading " + uri + " with Picasso");
         Picasso.with(context)
                 .load(uri.toString())
                 .fit()
@@ -60,8 +59,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
                 .placeholder(R.drawable.ic_movie)
                 .error(R.drawable.ic_movie)
                 .into(holder.mMoviePosterImageView);
-        Log.w(TAG, "after loading, size is " + holder.mMoviePosterImageView.getLayoutParams() + ", " + holder.mMoviePosterImageView.getMaxWidth());
-
     }
 
     @Override

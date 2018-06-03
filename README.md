@@ -29,7 +29,7 @@ By building this app, you will demonstrate your understanding of the foundationa
 - You will incorporate libraries to simplify the amount of code you need to write
 
 ## Important setup information
-- In order to avoid exposing an API key to github, I chose to use a resource file that I have added to my gitignore file.  This file is called `secrets.xml`.  In it, this code expects a property called `api_moviedb_api_key` that contains a valid MovieDB API token.  The code loads the key before making API calls.
+- In order to avoid exposing an API key to github, I chose to use a resource file that I have added to my gitignore file.  This file is called `secrets.xml`.  In it, this code expects a property called `api_moviedb_api_key` that contains a valid MovieDB API token.  The code loads the key before making API calls.  Instructions for obtaining an API code are available at [MovieDB API](https://www.themoviedb.org/faq/api).
 
 ## Attributions and references
 
@@ -39,6 +39,7 @@ By building this app, you will demonstrate your understanding of the foundationa
 - [Hiding Secrets in Android Apps](https://rammic.github.io/2015/07/28/hiding-secrets-in-android-apps/)
 - [RecyclerViews](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 - [Picasso and RecyclerViews](https://github.com/codepath/android_guides/wiki/Displaying-Images-with-the-Picasso-Library)
+- [Image Icons from MaterialPalette.com](https://www.materialpalette.com/icons)
 
 ## Concepts for this project
 
