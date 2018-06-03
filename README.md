@@ -28,6 +28,9 @@ By building this app, you will demonstrate your understanding of the foundationa
 - You will use adapters and custom list layouts to populate list views.
 - You will incorporate libraries to simplify the amount of code you need to write
 
+## Important setup information
+- In order to avoid exposing an API key to github, I chose to use a resource file that I have added to my gitignore file.  This file is called `secrets.xml`.  In it, this code expects a property called `api_moviedb_api_key` that contains a valid MovieDB API token.  The code loads the key before making API calls.
+
 ## Attributions and references
 
 - [Storing Secret Keys in Android](https://github.com/codepath/android_guides/wiki/Storing-Secret-Keys-in-Android)
@@ -35,6 +38,7 @@ By building this app, you will demonstrate your understanding of the foundationa
 - [Securely Storing Secrets in an Android Application using the KeyStore API](https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3)
 - [Hiding Secrets in Android Apps](https://rammic.github.io/2015/07/28/hiding-secrets-in-android-apps/)
 - [RecyclerViews](https://developer.android.com/guide/topics/ui/layout/recyclerview)
+- [Picasso and RecyclerViews](https://github.com/codepath/android_guides/wiki/Displaying-Images-with-the-Picasso-Library)
 
 ## Concepts for this project
 
