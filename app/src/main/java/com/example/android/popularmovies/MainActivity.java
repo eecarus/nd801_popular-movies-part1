@@ -32,11 +32,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MOVIEDB_LOADER = 37;
+    private static final String LAYOUT_MANAGER_STATE_KEY = "layoutManager.state";
 
     private RecyclerView mMoviePostersRecyclerView;
     private TextView mErrorMessageTextView;
     private ProgressBar mProgressIndicator;
     private MovieListAdapter mMovieListAdapter;
+    private GridLayoutManager mGridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mProgressIndicator = findViewById(R.id.pb_loading_indicator);
 
         // create the GridLayoutManager for the recycler view, set span to a calculated value
-        GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, calculateSpan());
-        layoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        layoutManager.setReverseLayout(false);
+        mGridLayoutManager = new GridLayoutManager(MainActivity.this, calculateSpan());
+        mGridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        mGridLayoutManager.setReverseLayout(false);
 
         // initialize the service
         MovieDbService.initializeIfNeeded(getApplicationContext());
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mMovieListAdapter = new MovieListAdapter(MainActivity.this, this);
 
         // attach the Recycler view and set its attributes
-        mMoviePostersRecyclerView.setLayoutManager(layoutManager);
+        mMoviePostersRecyclerView.setLayoutManager(mGridLayoutManager);
         mMoviePostersRecyclerView.setHasFixedSize(true);
         mMoviePostersRecyclerView.setAdapter(mMovieListAdapter);
 
@@ -176,6 +178,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 //    private void loadFakeMovieData() {
 //        mMovieListAdapter.setMovieSummaries(MovieDbService.getFakeData(MainActivity.this).getResults());
 //    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Activity Lifecycle transitions
+    // ---------------------------------------------------------------------------------------------
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(LAYOUT_MANAGER_STATE_KEY, mGridLayoutManager.onSaveInstanceState());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState.containsKey(LAYOUT_MANAGER_STATE_KEY))
+            mGridLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(LAYOUT_MANAGER_STATE_KEY));
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
     // ---------------------------------------------------------------------------------------------
     // Data loading transitions

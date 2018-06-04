@@ -77,9 +77,10 @@ public class ApiUtils {
                     return true;    // no need to check further, this is good enough
 
                 // attempt to actually connect to Google
+                HttpURLConnection conn = null;
                 try {
-                    URL url = new URL("http://www.google.com");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    URL url = new URL("http://www.microsoft.com");
+                    conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(1000);
                     conn.connect();
                     return true;        // we can connect if there is no exception
@@ -89,6 +90,10 @@ public class ApiUtils {
                 } catch (IOException e) {
                     // quietly fail and indicate no connectivity
                     // Log.v(TAG, "Unable to connect to Google", e);
+                }
+                finally {
+                    if (conn != null)
+                        conn.disconnect();
                 }
             }
         }
