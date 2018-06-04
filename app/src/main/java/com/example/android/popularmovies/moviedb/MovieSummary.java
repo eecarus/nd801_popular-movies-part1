@@ -1,8 +1,11 @@
 package com.example.android.popularmovies.moviedb;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.joda.time.LocalDate;
 
-public class MovieSummary {
+public class MovieSummary implements Parcelable {
 
     private Integer voteCount;
     private Long id;
@@ -19,6 +22,9 @@ public class MovieSummary {
     private String overview;
     private LocalDate releaseDate;
 
+    public MovieSummary() {
+        // no-arg constructor
+    }
 
     public Integer getVoteCount() {
         return voteCount;
@@ -131,4 +137,58 @@ public class MovieSummary {
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // Implementation of Parcelable
+    // ---------------------------------------------------------------------------------------------
+
+    public MovieSummary(Parcel in) {
+        voteCount = in.readInt();
+        id = in.readLong();
+        video = in.readInt() == 1;
+        voteAverage = in.readString();
+        title = in.readString();
+        popularity = in.readString();
+        posterPath = in.readString();
+        originalLanguage = in.readString();
+        originalTitle = in.readString();
+        backdropPath = in.readString();
+        adult = in.readInt() == 1;
+        overview = in.readString();
+        releaseDate = (LocalDate) in.readSerializable();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(voteCount);
+        dest.writeLong(id);
+        dest.writeInt(video ? 1 : 0);
+        dest.writeString(voteAverage);
+        dest.writeString(title);
+        dest.writeString(popularity);
+        dest.writeString(posterPath);
+        dest.writeString(originalLanguage);
+        dest.writeString(originalTitle);
+        dest.writeString(backdropPath);
+        dest.writeInt(adult ? 1 : 0);
+        dest.writeString(overview);
+        dest.writeSerializable(releaseDate);
+    }
+
+    public static final Parcelable.Creator<MovieSummary> CREATOR = new Parcelable.Creator<MovieSummary>() {
+
+        public MovieSummary createFromParcel(Parcel in) {
+            return new MovieSummary(in);
+        }
+
+        public MovieSummary[] newArray(int size) {
+            return new MovieSummary[size];
+        }
+    };
+
 }

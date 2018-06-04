@@ -18,19 +18,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private final Context context;
     private MovieSummary[] movieSummaries;
+    private MovieAdapterClickHandler onClickHandler;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        final ImageView mMoviePosterImageView;
-
-        private ViewHolder(View itemView) {
-            super(itemView);
-            this.mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_item_poster);
-        }
-    }
-
-    public MovieListAdapter(Context context) {
+    public MovieListAdapter(Context context, MovieAdapterClickHandler onClickHandler) {
         this.context = context;
+        this.onClickHandler = onClickHandler;
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // Methods needed for RecyclerView.Adapter
+    // ---------------------------------------------------------------------------------------------
 
     @NonNull
     @Override
@@ -64,6 +61,35 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public int getItemCount() {
         return movieSummaries == null ? 0 : movieSummaries.length;
     }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        final ImageView mMoviePosterImageView;
+
+        private ViewHolder(View itemView) {
+            super(itemView);
+            this.mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_item_poster);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            onClickHandler.onClick(movieSummaries[adapterPosition]);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Methods needed for an OnClick Listener
+    // ---------------------------------------------------------------------------------------------
+
+    public interface MovieAdapterClickHandler {
+        void onClick(MovieSummary summary);
+    }
+
+
+    // ---------------------------------------------------------------------------------------------
+    // Methods needed to update the adapter when data is loaded
+    // ---------------------------------------------------------------------------------------------
 
     public void setMovieSummaries(MovieSummary[] movieSummaries) {
         this.movieSummaries = movieSummaries;

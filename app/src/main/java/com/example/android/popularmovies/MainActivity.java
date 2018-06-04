@@ -1,6 +1,7 @@
 package com.example.android.popularmovies;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Movie;
 import android.os.Bundle;
@@ -20,11 +21,13 @@ import android.widget.TextView;
 
 import com.example.android.popularmovies.moviedb.ApiUtils;
 import com.example.android.popularmovies.moviedb.MovieDbService;
+import com.example.android.popularmovies.moviedb.MovieSummary;
 import com.example.android.popularmovies.moviedb.MovieSummaryResults;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<MovieSummaryResults> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<MovieSummaryResults>,
+        MovieListAdapter.MovieAdapterClickHandler {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MOVIEDB_LOADER = 37;
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         MovieDbService.initializeIfNeeded(getApplicationContext());
 
         // create the Adapter
-        mMovieListAdapter = new MovieListAdapter(MainActivity.this);
+        mMovieListAdapter = new MovieListAdapter(MainActivity.this, this);
 
         // attach the Recycler view and set its attributes
         mMoviePostersRecyclerView.setLayoutManager(layoutManager);
@@ -137,6 +140,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Implementation of MovieListAdapter.MovieAdapterClickHandler
+    // ---------------------------------------------------------------------------------------------
+
+    @Override
+    public void onClick(MovieSummary summary) {
+        Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
+        detailIntent.putExtra(DetailActivity.MOVIE_SUMMARY_KEY, summary);
+        startActivity(detailIntent);
+    }
 
     // ---------------------------------------------------------------------------------------------
     // The following methods deal with changing the data on the adapter.
