@@ -74,7 +74,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            onClickHandler.onClick(movieSummaries[adapterPosition]);
+            onClickHandler.onClick(movieSummaries[adapterPosition], this.mMoviePosterImageView);
         }
     }
 
@@ -83,7 +83,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     // ---------------------------------------------------------------------------------------------
 
     public interface MovieAdapterClickHandler {
-        void onClick(MovieSummary summary);
+        void onClick(MovieSummary summary, ImageView imageView);
     }
 
 

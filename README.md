@@ -40,6 +40,14 @@ By building this app, you will demonstrate your understanding of the foundationa
 - [RecyclerViews](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 - [Picasso and RecyclerViews](https://github.com/codepath/android_guides/wiki/Displaying-Images-with-the-Picasso-Library)
 - [Image Icons from MaterialPalette.com](https://www.materialpalette.com/icons)
+- [Activity Transitions](https://developer.android.com/training/transitions/start-activity)
+- [Activity Transitions - Youtube](https://www.youtube.com/watch?v=RhiPJByIMrM)
+- [Material Animations](https://github.com/lgvalle/Material-Animations)
+- [Shared Element Activity Transition](https://github.com/codepath/android_guides/wiki/Shared-Element-Activity-Transition)
+- [Shared Element Activity Transition - another example](http://mikescamell.com/shared-element-transitions-part-1/)
+- [Shared Element Activity Transitions with Recycler View](http://mikescamell.com/shared-element-transitions-part-4-recyclerview/)
+- [How to get ActionBar Up button to behave like a Back button](https://developer.android.com/training/implementing-navigation/ancestral)
+
 
 ## Concepts for this project
 

@@ -97,6 +97,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_detail_release_date_label"
+        android:transitionName="@string/transition_list_to_detail"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <TextView

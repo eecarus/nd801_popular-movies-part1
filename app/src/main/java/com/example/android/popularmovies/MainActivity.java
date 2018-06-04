@@ -6,9 +6,11 @@ import android.content.res.Configuration;
 import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -145,10 +148,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // ---------------------------------------------------------------------------------------------
 
     @Override
-    public void onClick(MovieSummary summary) {
+    public void onClick(MovieSummary summary, ImageView imageView) {
         Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
         detailIntent.putExtra(DetailActivity.MOVIE_SUMMARY_KEY, summary);
-        startActivity(detailIntent);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(this,
+                        imageView,
+                        ViewCompat.getTransitionName(imageView));
+        startActivity(detailIntent, options.toBundle());
     }
 
     // ---------------------------------------------------------------------------------------------

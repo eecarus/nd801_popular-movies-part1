@@ -27,5 +27,6 @@
     <string name="detail_release_date_label">Released:</string>
     <string name="detail_overview_label">Synopsis:</string>
     <string name="detail_activity_title">Movie Details</string>
+    <string name="transition_list_to_detail">list_to_detail</string>
 
 </resources>
