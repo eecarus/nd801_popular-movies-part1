@@ -142,7 +142,7 @@ public class MovieSummary implements Parcelable {
     // Implementation of Parcelable
     // ---------------------------------------------------------------------------------------------
 
-    public MovieSummary(Parcel in) {
+    private MovieSummary(Parcel in) {
         voteCount = in.readInt();
         id = in.readLong();
         video = in.readInt() == 1;

@@ -2,8 +2,6 @@ package com.example.android.popularmovies;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -34,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MOVIEDB_LOADER = 37;
-    private static final String MOVIEDB_SERVICE_KEY = "moviedb.service";
-    private static MovieDbService movieService;
 
     private RecyclerView mMoviePostersRecyclerView;
     private TextView mErrorMessageTextView;
@@ -110,16 +106,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             protected void onStartLoading() {
                 // there are really no arguments, because we will get the data from Preferences
                 forceLoad();
+                showLoadingViews();
             }
 
             @Override
             public MovieSummaryResults loadInBackground() {
-                String type = getContext().getString(R.string.pref_sortedby_key_popular);
-                // for now, hardcode as most popular
-                try {
-                    return MovieDbService.getMovieSummaryResults(getContext(),type);
-                } catch (IOException e) {
-                    Log.e(TAG, "Unable to retrieve movie summaries", e);
+                // check for internet connectivity
+                if (ApiUtils.isNetworkReadyForUse(getContext(), true)) {
+                    String type = getContext().getString(R.string.pref_sortedby_key_popular);
+                    // for now, hardcode as most popular
+                    try {
+                        return MovieDbService.getMovieSummaryResults(type);
+                    } catch (IOException e) {
+                        Log.e(TAG, "Unable to retrieve movie summaries", e);
+                    }
                 }
                 return null;
             }
@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(@NonNull Loader<MovieSummaryResults> loader, MovieSummaryResults data) {
         if (data != null) {
             // save the data
-            Log.w(TAG, "got here wih data!");
             showDataView();
             mMovieListAdapter.setMovieSummaries(data.getResults());
         } else {
@@ -174,9 +173,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             loaderManager.restartLoader(MOVIEDB_LOADER, args, this);
     }
 
-    private void loadFakeMovieData() {
-        mMovieListAdapter.setMovieSummaries(MovieDbService.getFakeData(MainActivity.this).getResults());
-    }
+//    private void loadFakeMovieData() {
+//        mMovieListAdapter.setMovieSummaries(MovieDbService.getFakeData(MainActivity.this).getResults());
+//    }
 
     // ---------------------------------------------------------------------------------------------
     // Data loading transitions
@@ -205,9 +204,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // ---------------------------------------------------------------------------------------------
 
     private int calculateSpan() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            return 5;
-        else
-            return 3;
+        String spanCount = getResources().getString(R.string.recycler_view_span_count);
+        return Integer.parseInt(spanCount);
     }
 }

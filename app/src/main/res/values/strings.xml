@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">My Movie App</string>
 
+    <!-- Recycler values -->
+    <string name="recycler_view_span_count">3</string>
+
     <!-- API values -->
     <string name="cd_movie_poster">Poster for a movie</string>
     <string name="api_moviedb_base_url">http://api.themoviedb.org/3/</string>
@@ -21,12 +24,11 @@
     <string name="pref_sortedby_key_toprated" translatable="false">top_rated</string>
 
     <!-- Strings for the activity_detail.xml -->
-    <string name="detail_backdrop_picture">Picture of movie backdrop</string>
     <string name="detail_movie_poster">Picture of movie poster</string>
     <string name="detail_user_rating_label">User Rating:</string>
     <string name="detail_release_date_label">Released:</string>
-    <string name="detail_overview_label">Synopsis:</string>
     <string name="detail_activity_title">Movie Details</string>
     <string name="transition_list_to_detail">list_to_detail</string>
+    <string name="detail_out_of_10">/10</string>
 
 </resources>

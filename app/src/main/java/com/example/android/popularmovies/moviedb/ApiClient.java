@@ -12,7 +12,7 @@ import static com.example.android.popularmovies.moviedb.ApiUtils.toURL;
 
 class ApiClient {
 
-    private static final String PATH_CONFIGURATION = "configuration";
+//    private static final String PATH_CONFIGURATION = "configuration";
     private static final String QUERY_API_KEY = "api_key";
     private static final String QUERY_PAGE = "page";
 
@@ -20,7 +20,6 @@ class ApiClient {
     private final String imageBaseUrl;
     private final String apiKey;
     private final Gson gson;
-    private Configuration configuration;
 
     ApiClient(String apiBaseUrl, String imageBaseUrl, String apiKey) {
         validateInputs(apiBaseUrl, imageBaseUrl, apiKey);
@@ -28,12 +27,6 @@ class ApiClient {
         this.imageBaseUrl = imageBaseUrl;
         this.apiKey = apiKey;
         this.gson = initializeGson();
-    }
-
-    public Configuration getConfiguration() throws IOException {
-        if (configuration == null)
-            this.configuration = initializeConfiguration();
-        return configuration;
     }
 
     public Uri getImageUri(String size, String path) throws IllegalStateException {
@@ -50,11 +43,11 @@ class ApiClient {
         return gson;
     }
 
-    private Configuration initializeConfiguration() throws IOException {
-        Uri uri = getUriBuilder(PATH_CONFIGURATION).build();
-        String jsonResponse = getResponseFromHttpUrl(toURL(uri));
-        return getGson().fromJson(jsonResponse, Configuration.class);
-    }
+//    private Configuration initializeConfiguration() throws IOException {
+//        Uri uri = getUriBuilder(PATH_CONFIGURATION).build();
+//        String jsonResponse = getResponseFromHttpUrl(toURL(uri));
+//        return getGson().fromJson(jsonResponse, Configuration.class);
+//    }
 
     private void validateInputs(String apiBaseUrl, String imageBaseUrl, String apiKey) {
         if (apiBaseUrl == null || imageBaseUrl == null || apiKey == null)

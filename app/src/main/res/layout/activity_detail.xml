@@ -81,7 +81,7 @@
         android:id="@+id/tv_detail_over_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="/10"
+        android:text="@string/detail_out_of_10"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_user_rating"
         app:layout_constraintStart_toEndOf="@+id/tv_detail_user_rating" />
 

@@ -2,9 +2,9 @@ package com.example.android.popularmovies;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.example.android.popularmovies.moviedb.MovieDbService;
 import com.example.android.popularmovies.moviedb.MovieSummary;
 import com.squareup.picasso.Picasso;
-
-import java.text.SimpleDateFormat;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -24,7 +22,6 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mUserRatingTextView;
     private TextView mOverviewTextView;
     private ImageView mPosterImageView;
-    private MovieSummary movieSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent myIntent = getIntent();
         if (myIntent != null) {
             if (myIntent.hasExtra(MOVIE_SUMMARY_KEY)) {
-                movieSummary = myIntent.getParcelableExtra(MOVIE_SUMMARY_KEY);
+                MovieSummary movieSummary = myIntent.getParcelableExtra(MOVIE_SUMMARY_KEY);
                 populateView(movieSummary);
             }
         }
@@ -74,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
     /**
      * Populate the view using the supplied movie summary object
      *
-     * @param movieSummary
+     * @param movieSummary the summary data for the movie that the user clicked on.
      */
     private void populateView(MovieSummary movieSummary) {
         // set the title

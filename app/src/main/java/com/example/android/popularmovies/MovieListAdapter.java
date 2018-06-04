@@ -18,7 +18,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private final Context context;
     private MovieSummary[] movieSummaries;
-    private MovieAdapterClickHandler onClickHandler;
+    private final MovieAdapterClickHandler onClickHandler;
 
     public MovieListAdapter(Context context, MovieAdapterClickHandler onClickHandler) {
         this.context = context;

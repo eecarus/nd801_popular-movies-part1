@@ -3,16 +3,10 @@ package com.example.android.popularmovies.moviedb;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.util.Log;
 
 import com.example.android.popularmovies.R;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import static com.example.android.popularmovies.moviedb.ApiUtils.initializeGson;
 
 public class MovieDbService {
 
@@ -63,41 +57,40 @@ public class MovieDbService {
     /**
      * Returns data from an API call to the MovieDB endpoint.
      *
-     * @param context
      * @return a MovieSummaryResults loaded from the API call.
      * @throws IOException           if an error occurs while loading the data
      * @throws IllegalStateException if the API client has not been properly initialized.
      */
-    public static MovieSummaryResults getMovieSummaryResults(Context context, String type) throws IllegalStateException, IOException {
+    public static MovieSummaryResults getMovieSummaryResults(String type) throws IllegalStateException, IOException {
         assertState();
         return API_CLIENT.getMovies(type);
     }
 
-    /**
-     * Returns fake data for initial testing
-     *
-     * @param context
-     * @return a MovieSummaryResults loaded from a raw fake_movie_data JSON file.
-     * @throws IllegalStateException
-     */
-    public static MovieSummaryResults getFakeData(Context context) throws IllegalStateException {
-        try {
-            InputStream inputStream = context.getResources().openRawResource(R.raw.fake_movie_data);
-            StringBuilder buffer = new StringBuilder();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            String line = reader.readLine();
-            while (line != null) {
-                buffer.append(line);
-                line = reader.readLine();
-            }
-
-            String jsonString = buffer.toString();
-            Log.w(TAG, jsonString);
-            return initializeGson().fromJson(jsonString, MovieSummaryResults.class);
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to read fake data", e);
-        }
-    }
+//    /**
+//     * Returns fake data for initial testing
+//     *
+//     * @param context an Activity or Application Context
+//     * @return a MovieSummaryResults loaded from a raw fake_movie_data JSON file.
+//     * @throws IllegalStateException when the fake data file cannot be read.
+//     */
+//    public static MovieSummaryResults getFakeData(Context context) throws IllegalStateException {
+//        try {
+//            InputStream inputStream = context.getResources().openRawResource(R.raw.fake_movie_data);
+//            StringBuilder buffer = new StringBuilder();
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+//            String line = reader.readLine();
+//            while (line != null) {
+//                buffer.append(line);
+//                line = reader.readLine();
+//            }
+//
+//            String jsonString = buffer.toString();
+//            Log.w(TAG, jsonString);
+//            return initializeGson().fromJson(jsonString, MovieSummaryResults.class);
+//        } catch (IOException e) {
+//            throw new IllegalStateException("Unable to read fake data", e);
+//        }
+//    }
 
     /**
      * Makes sure that the API client has been properly initialized.  Throws

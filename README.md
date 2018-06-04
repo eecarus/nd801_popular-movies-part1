@@ -53,6 +53,7 @@ By building this app, you will demonstrate your understanding of the foundationa
 - [Shared Element Activity Transition - another example](http://mikescamell.com/shared-element-transitions-part-1/)
 - [Shared Element Activity Transitions with Recycler View](http://mikescamell.com/shared-element-transitions-part-4-recyclerview/)
 - [How to get ActionBar Up button to behave like a Back button](https://developer.android.com/training/implementing-navigation/ancestral)
+- [Check if a network connection is availble](https://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out)
 
 
 ## Concepts for this project
