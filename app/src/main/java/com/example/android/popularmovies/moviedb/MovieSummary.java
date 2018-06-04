@@ -7,9 +7,9 @@ public class MovieSummary {
     private Integer voteCount;
     private Long id;
     private boolean video;
-    private Double voteAverage;
+    private String voteAverage;
     private String title;
-    private Double popularity;
+    private String popularity;
     private String posterPath;
     private String originalLanguage;
     private String originalTitle;
@@ -44,11 +44,11 @@ public class MovieSummary {
         this.video = video;
     }
 
-    public Double getVoteAverage() {
+    public String getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(Double voteAverage) {
+    public void setVoteAverage(String voteAverage) {
         this.voteAverage = voteAverage;
     }
 
@@ -60,11 +60,11 @@ public class MovieSummary {
         this.title = title;
     }
 
-    public Double getPopularity() {
+    public String getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(Double popularity) {
+    public void setPopularity(String popularity) {
         this.popularity = popularity;
     }
 
