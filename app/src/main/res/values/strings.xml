@@ -18,6 +18,8 @@
     <string name="pref_sortedby_key_popular" translatable="false">popular</string>
 
     <string name="pref_sortedby_label_toprated">Top Rated</string>
-    <string name="pref_sortedby_key_toprated"  translatable="false">top_rated</string>
+    <string name="pref_sortedby_key_toprated" translatable="false">top_rated</string>
+    <string name="detail_backdrop_picture">Picture of movie backdrop</string>
+    <string name="detail_movie_poster">Picture of movie poster</string>
 
 </resources>
