@@ -2,8 +2,8 @@ package com.example.android.popularmovies;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,24 +18,23 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private final Context context;
     private MovieSummary[] movieSummaries;
-    private MovieDbService movieService;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView mMoviePosterImageView;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             this.mMoviePosterImageView = itemView.findViewById(R.id.iv_movie_item_poster);
         }
     }
 
-    public MovieListAdapter(Context context, MovieDbService movieService) {
+    public MovieListAdapter(Context context) {
         this.context = context;
-        this.movieService = movieService;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.movie_list_item, parent, false);
@@ -43,13 +42,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // get the poster at this position
         MovieSummary summary = movieSummaries[position];
         holder.mMoviePosterImageView.setContentDescription(summary.getTitle());
 
         // convert to the full URL
-        Uri uri = movieService.getFullImagePath(summary.getPosterPath());
+        Uri uri = MovieDbService.getFullImagePath(summary.getPosterPath());
 
         // use Picasso to load it
         Picasso.with(context)

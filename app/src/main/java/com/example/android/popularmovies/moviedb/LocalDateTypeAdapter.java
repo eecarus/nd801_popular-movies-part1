@@ -19,8 +19,6 @@ import java.io.IOException;
  */
 class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
 
-    private final String ISO_8601_FORMAT = "yyyy-MM-dd";
-
     @Override
     public void write(JsonWriter out, LocalDate value) throws IOException {
         if (value == null) {

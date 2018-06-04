@@ -53,22 +53,4 @@ public class ApiUtils {
         return builder.create();
     }
 
-    public static MovieSummaryResults getFakeData(Context context) throws IllegalStateException {
-        try {
-            InputStream inputStream = context.getResources().openRawResource(R.raw.fake_movie_data);
-            StringBuilder buffer = new StringBuilder();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            String line = reader.readLine();
-            while (line != null) {
-                buffer.append(line);
-                line = reader.readLine();
-            }
-
-            String jsonString = buffer.toString();
-            Log.w(TAG, jsonString);
-            return initializeGson().fromJson(jsonString, MovieSummaryResults.class);
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to read fake data", e);
-        }
-    }
 }

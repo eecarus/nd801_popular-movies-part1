@@ -10,10 +10,11 @@ import static com.example.android.popularmovies.moviedb.ApiUtils.getResponseFrom
 import static com.example.android.popularmovies.moviedb.ApiUtils.initializeGson;
 import static com.example.android.popularmovies.moviedb.ApiUtils.toURL;
 
-public class ApiClient {
+class ApiClient {
 
     private static final String PATH_CONFIGURATION = "configuration";
     private static final String QUERY_API_KEY = "api_key";
+    private static final String QUERY_PAGE = "page";
 
     private final String apiBaseUrl;
     private final String imageBaseUrl;
@@ -21,7 +22,7 @@ public class ApiClient {
     private final Gson gson;
     private Configuration configuration;
 
-    public ApiClient(String apiBaseUrl, String imageBaseUrl, String apiKey) {
+    ApiClient(String apiBaseUrl, String imageBaseUrl, String apiKey) {
         validateInputs(apiBaseUrl, imageBaseUrl, apiKey);
         this.apiBaseUrl = apiBaseUrl;
         this.imageBaseUrl = imageBaseUrl;
@@ -35,10 +36,6 @@ public class ApiClient {
         return configuration;
     }
 
-    public Gson getGson() {
-        return gson;
-    }
-
     public Uri getImageUri(String size, String path) throws IllegalStateException {
         if (path.startsWith("/"))
             path = path.substring(1); // remove the leading /
@@ -49,10 +46,14 @@ public class ApiClient {
                 .build();
     }
 
+    private Gson getGson() {
+        return gson;
+    }
+
     private Configuration initializeConfiguration() throws IOException {
         Uri uri = getUriBuilder(PATH_CONFIGURATION).build();
         String jsonResponse = getResponseFromHttpUrl(toURL(uri));
-        return gson.fromJson(jsonResponse, Configuration.class);
+        return getGson().fromJson(jsonResponse, Configuration.class);
     }
 
     private void validateInputs(String apiBaseUrl, String imageBaseUrl, String apiKey) {
@@ -67,6 +68,15 @@ public class ApiClient {
         bldr.appendPath(subPath);
         bldr.appendQueryParameter(QUERY_API_KEY, apiKey);
         return bldr;
+    }
+
+    MovieSummaryResults getMovies(String type) throws IOException {
+        Uri uri = getUriBuilder("movie")
+                .appendPath(type)
+                .appendQueryParameter(QUERY_PAGE, String.valueOf(1))
+                .build();
+        String jsonResponse = getResponseFromHttpUrl(toURL(uri));
+        return getGson().fromJson(jsonResponse, MovieSummaryResults.class);
     }
 
 }

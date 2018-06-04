@@ -6,4 +6,5 @@
     <dimen name="activity_top_padding">16dp</dimen>
     <dimen name="summary_movie_poster_height">192dp</dimen>
     <dimen name="summary_padding">4dp</dimen>
+    <dimen name="progress_indicator_height">42dp</dimen>
 </resources>
