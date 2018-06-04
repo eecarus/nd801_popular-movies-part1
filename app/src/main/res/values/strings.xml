@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies</string>
+    <string name="app_name">My Movie App</string>
 
     <!-- API values -->
     <string name="cd_movie_poster">Poster for a movie</string>

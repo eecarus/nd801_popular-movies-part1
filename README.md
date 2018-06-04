@@ -29,7 +29,13 @@ By building this app, you will demonstrate your understanding of the foundationa
 - You will incorporate libraries to simplify the amount of code you need to write
 
 ## Important setup information
-- In order to avoid exposing an API key to github, I chose to use a resource file that I have added to my gitignore file.  This file is called `secrets.xml`.  In it, this code expects a property called `api_moviedb_api_key` that contains a valid MovieDB API token.  The code loads the key before making API calls.  Instructions for obtaining an API code are available at [MovieDB API](https://www.themoviedb.org/faq/api).
+- In order to avoid exposing an API key to github, I chose to use a resource file that I have added to my gitignore file.  This file is called `secrets.xml`.  In it, this code expects a property called `api_moviedb_api_key` that contains a valid MovieDB API token.  The code loads the key before making API calls.  Instructions for obtaining an API code are available at [MovieDB API](https://www.themoviedb.org/faq/api).  Once you have an API key, create a string resource file called `secrets.xml` that contains the following:
+
+```xml
+<resource>
+    <string name="api_moviedb_api_key">ENTER_YOUR_API_KEY_HERE</string>
+</resource>
+```
 
 ## Attributions and references
 
