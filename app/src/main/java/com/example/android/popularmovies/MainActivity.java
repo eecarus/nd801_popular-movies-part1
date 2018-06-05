@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -16,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // register listener
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-
-        Log.w(TAG, "onCreate");
 
         // initialize the loader
         loadMovieData();
@@ -135,8 +132,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             protected void onStartLoading() {
                 if (results != null) {
                     deliverResult(results);
-                }
-                else {
+                } else {
                     forceLoad();
                     showLoadingViews();
                 }
@@ -144,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             @Override
             public MovieSummaryResults loadInBackground() {
+                // SystemClock.sleep(1000);
+
                 // check for internet connectivity
                 if (ApiUtils.isNetworkReadyForUse(getContext(), true)) {
                     String type = getMovieListType();
