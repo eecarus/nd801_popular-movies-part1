@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -209,9 +208,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private String getMovieListType() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String sortedBy = preferences.getString(getString(R.string.pref_sortedby_key),
+        return preferences.getString(getString(R.string.pref_sortedby_key),
                 getString(R.string.pref_sortedby_key_popular));
-        return sortedBy;
     }
 
     // ---------------------------------------------------------------------------------------------
