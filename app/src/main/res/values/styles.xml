@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- if you don't do this, app will crash when the settings activity is launched because PreferenceFragmentCompat requires this -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
 
         <!-- transitions -->
         <item name="android:windowContentTransitions">true</item>

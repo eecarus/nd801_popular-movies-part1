@@ -2,7 +2,9 @@ package com.example.android.popularmovies;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
@@ -10,8 +12,10 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +32,8 @@ import com.example.android.popularmovies.moviedb.MovieSummaryResults;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<MovieSummaryResults>,
-        MovieListAdapter.MovieAdapterClickHandler {
+        MovieListAdapter.MovieAdapterClickHandler,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MOVIEDB_LOADER = 37;
@@ -66,6 +71,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mMoviePostersRecyclerView.setHasFixedSize(true);
         mMoviePostersRecyclerView.setAdapter(mMovieListAdapter);
 
+        // register listener
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+
+        Log.w(TAG, "onCreate");
+
         // initialize the loader
         loadMovieData();
     }
@@ -86,9 +96,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int selectedId = item.getItemId();
-        if (selectedId == R.id.action_refresh) {
-            loadMovieData();
-            return true;
+        switch (selectedId) {
+            case R.id.action_refresh:
+                loadMovieData();
+                return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -97,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // The section on Android Lifecycle (Loaders) comes from Lesson 2:7.17
     //
     // The following methods implement LoaderManager.LoaderCallbacks()
+    // The framework automatically calls the onStartLoading() when the Activity resumes, so caching
+    // is needed to prevent an unlimited number of network calls.
     // ---------------------------------------------------------------------------------------------
 
     @SuppressLint("StaticFieldLeak")
@@ -104,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<MovieSummaryResults> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<MovieSummaryResults>(MainActivity.this) {
+
             @Override
             protected void onStartLoading() {
                 // there are really no arguments, because we will get the data from Preferences
@@ -115,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public MovieSummaryResults loadInBackground() {
                 // check for internet connectivity
                 if (ApiUtils.isNetworkReadyForUse(getContext(), true)) {
-                    String type = getContext().getString(R.string.pref_sortedby_key_popular);
+                    String type = getMovieListType();
                     // for now, hardcode as most popular
                     try {
                         return MovieDbService.getMovieSummaryResults(type);
@@ -179,6 +197,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 //        mMovieListAdapter.setMovieSummaries(MovieDbService.getFakeData(MainActivity.this).getResults());
 //    }
 
+    private String getMovieListType() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String sortedBy = preferences.getString(getString(R.string.pref_sortedby_key),
+                getString(R.string.pref_sortedby_key_popular));
+        return sortedBy;
+    }
+
     // ---------------------------------------------------------------------------------------------
     // Activity Lifecycle transitions
     // ---------------------------------------------------------------------------------------------
@@ -195,6 +220,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mGridLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(LAYOUT_MANAGER_STATE_KEY));
         super.onRestoreInstanceState(savedInstanceState);
     }
+
+    @Override
+    protected void onDestroy() {
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+        super.onDestroy();
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Implementations for SharedPreferences.OnSharedPreferenceChangeListener
+    // ---------------------------------------------------------------------------------------------
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (getString(R.string.pref_sortedby_key).equals(key)) {
+            loadMovieData();    // force a reload, later we will add caching on the Loader to avoid repetitive hits
+        }
+    }
+
 
     // ---------------------------------------------------------------------------------------------
     // Data loading transitions

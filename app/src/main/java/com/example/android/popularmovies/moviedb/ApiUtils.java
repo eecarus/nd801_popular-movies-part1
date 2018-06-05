@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 
 import org.joda.time.LocalDate;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -60,7 +61,7 @@ public class ApiUtils {
      * <p>
      * Note that <code>checkForInternet</code> should never be called while on the main UI
      * thread!
-     *
+     * <p>
      * Attribution: https://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out
      *
      * @param context          the Activity or Application Context
@@ -79,7 +80,7 @@ public class ApiUtils {
                 // attempt to actually connect to Google
                 HttpURLConnection conn = null;
                 try {
-                    URL url = new URL("http://www.microsoft.com");
+                    URL url = new URL("http://www.google.com");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(1000);
                     conn.connect();
@@ -90,14 +91,38 @@ public class ApiUtils {
                 } catch (IOException e) {
                     // quietly fail and indicate no connectivity
                     // Log.v(TAG, "Unable to connect to Google", e);
-                }
-                finally {
-                    if (conn != null)
-                        conn.disconnect();
+                } finally {
+                    closeConnectionQuietly(conn);
                 }
             }
         }
         return false;
     }
 
+    private static void closeConnectionQuietly(HttpURLConnection connection) {
+        if (connection != null) {
+            try {
+                Closeable inputStream = connection.getInputStream();
+                if (inputStream != null)
+                    inputStream.close();
+            } catch (IOException e) {
+                // close quietly
+            }
+            try {
+                Closeable outputStream = connection.getOutputStream();
+                if (outputStream != null)
+                    outputStream.close();
+            } catch (IOException e) {
+                // close quietly
+            }
+            try {
+                Closeable errorStream = connection.getErrorStream();
+                if (errorStream != null)
+                    errorStream.close();
+            } catch (IOException e) {
+                // close quietly
+            }
+            connection.disconnect();
+        }
+    }
 }

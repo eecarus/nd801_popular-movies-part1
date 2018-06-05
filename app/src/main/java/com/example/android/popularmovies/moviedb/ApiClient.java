@@ -12,7 +12,7 @@ import static com.example.android.popularmovies.moviedb.ApiUtils.toURL;
 
 class ApiClient {
 
-//    private static final String PATH_CONFIGURATION = "configuration";
+    //    private static final String PATH_CONFIGURATION = "configuration";
     private static final String QUERY_API_KEY = "api_key";
     private static final String QUERY_PAGE = "page";
 

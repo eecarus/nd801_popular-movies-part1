@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_sortedby_options_labels">
+        <item>@string/pref_sortedby_label_popular</item>
+        <item>@string/pref_sortedby_label_toprated</item>
+    </string-array>
+
+    <string-array name="pref_sortedby_options_keys">
+        <item>@string/pref_sortedby_key_popular</item>
+        <item>@string/pref_sortedby_key_toprated</item>
+    </string-array>
+    
+</resources>

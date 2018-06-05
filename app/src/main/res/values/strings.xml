@@ -4,14 +4,19 @@
     <!-- Recycler values -->
     <string name="recycler_view_span_count">3</string>
 
+    <!-- menu -->
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_settings">Settings</string>
+
+    <!-- messages -->
+    <string name="error_unable_to_load_movie_list">Unable to load movie list.  Please try again later.</string>
+
     <!-- API values -->
     <string name="cd_movie_poster">Poster for a movie</string>
     <string name="api_moviedb_base_url">http://api.themoviedb.org/3/</string>
     <string name="api_image_base_url">http://image.tmdb.org/t/p/</string>
     <!-- also w92, w154, w185, w342, w500, w780, or original -->
     <string name="api_moviedb_poster_image_size">w185</string>
-    <string name="menu_refresh">Refresh</string>
-    <string name="error_unable_to_load_movie_list">Unable to load movie list.  Please try again later.</string>
 
     <!-- Settings strings -->
     <string name="pref_sortedby_label">Sorted By</string>
@@ -32,5 +37,6 @@
     <string name="detail_out_of_10">/10</string>
     <string name="menu_popular">Get Most Popular</string>
     <string name="menu_top_rated">Get Top Rated</string>
+    <string name="settings_activity_title">Settings</string>
 
 </resources>
