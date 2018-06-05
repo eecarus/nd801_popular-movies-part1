@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -122,11 +123,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<MovieSummaryResults> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<MovieSummaryResults>(MainActivity.this) {
 
+            MovieSummaryResults results;
+
+            @Override
+            public void deliverResult(@Nullable MovieSummaryResults data) {
+                results = data;
+                super.deliverResult(data);
+            }
+
             @Override
             protected void onStartLoading() {
-                // there are really no arguments, because we will get the data from Preferences
-                forceLoad();
-                showLoadingViews();
+                if (results != null) {
+                    deliverResult(results);
+                }
+                else {
+                    forceLoad();
+                    showLoadingViews();
+                }
             }
 
             @Override
@@ -159,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(@NonNull Loader<MovieSummaryResults> loader) {
-
     }
 
     // ---------------------------------------------------------------------------------------------
